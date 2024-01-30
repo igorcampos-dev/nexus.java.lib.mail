@@ -16,4 +16,5 @@ public class EmailBean {
     SendEmailService emailService(){
         return new SendEmailService(mailProperties);
     }
+
 }

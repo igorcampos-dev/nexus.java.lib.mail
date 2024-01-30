@@ -1,16 +1,14 @@
 package com.nexus.mail;
 
+import com.nexus.mail.models.EmailProperties;
 import com.nexus.mail.properties.MailProperties;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -22,35 +20,57 @@ public class SendEmailService {
 
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        configureMailSender(mailSender);
+        configureMailProperties(mailSender);
+        return mailSender;
+    }
+
+    private void configureMailSender(JavaMailSenderImpl mailSender) {
+        mailSender.setHost(properties.getHost());
+        mailSender.setDefaultEncoding(properties.getUTF());
+        mailSender.setPort(properties.getPort());
         mailSender.setUsername(properties.getEmail());
         mailSender.setPassword(properties.getPassword());
-        mailSender.setDefaultEncoding("UTF-8");
+    }
+
+    private void configureMailProperties(JavaMailSenderImpl mailSender) {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.ssl.trust", "*");
-        return mailSender;
     }
 
-    @SneakyThrows
-    public void send(String email, String subject, String messages, String filename, Resource image)  {
-        try {
+    public void send(EmailProperties emailProperties)  {
             JavaMailSender emailSender = mailSender();
-            MimeMessage message = emailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setFrom(properties.getEmail());
-            helper.setTo(email.toLowerCase());
-            helper.setSentDate(new Date());
-            helper.setSubject(subject);
-            helper.setText(messages, true);
-            if (filename != null && image != null){helper.addAttachment(Objects.requireNonNull(filename), image);}
-
+            MimeMessage message = createMimeMessage(emailSender);
+            MimeMessageHelper helper = createMimeMessageHelper(message, emailProperties.multiPart());
+            configureHelper(helper, emailProperties );
             emailSender.send(message);
+    }
+
+    private MimeMessage createMimeMessage(JavaMailSender emailSender) {
+        return emailSender.createMimeMessage();
+    }
+
+    private MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage, boolean multiPart){
+        try {
+            return new MimeMessageHelper(mimeMessage, multiPart);
         } catch (MessagingException e) {
-            throw new MessagingException("O servidor encontrou uma falha ao tentar enviar o email. Por favor, tente novamente mais tarde.");
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void configureHelper(MimeMessageHelper helper, EmailProperties emailProperties){
+        try {
+        helper.setFrom(properties.getEmail());
+        helper.setTo(emailProperties.email());
+        helper.setSentDate(emailProperties.date());
+        helper.setSubject(emailProperties.subject());
+        helper.setText(emailProperties.messages(), true);
+
+        if (emailProperties.filename() != null && emailProperties.image() != null){helper.addAttachment(Objects.requireNonNull(emailProperties.filename()), emailProperties.image());}
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
         }
     }
 }
