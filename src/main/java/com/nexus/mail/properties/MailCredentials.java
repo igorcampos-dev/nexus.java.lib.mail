@@ -3,7 +3,7 @@ package com.nexus.mail.properties;
 import lombok.Data;
 
 @Data
-public class MailProperties {
+public class MailCredentials {
 
     private String email;
     private String password;
