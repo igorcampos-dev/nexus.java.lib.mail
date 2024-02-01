@@ -1,7 +1,7 @@
 package com.nexus.mail;
 
 import com.nexus.mail.models.EmailProperties;
-import com.nexus.mail.properties.MailCredentials;
+import com.nexus.mail.properties.MailProperties;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Properties;
 @AllArgsConstructor
 public class SendEmailService {
 
-    private final MailCredentials properties;
+    private final MailProperties properties;
 
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
