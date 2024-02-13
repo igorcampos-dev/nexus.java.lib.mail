@@ -1,4 +1,4 @@
-package com.nexus.mail;
+package com.nexus.mail.service.email;
 
 import com.nexus.mail.models.EmailProperties;
 import com.nexus.mail.properties.MailProperties;
