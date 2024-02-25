@@ -1,4 +1,4 @@
-package com.nexus.mail.models;
+package com.nexus.mail.properties;
 
 import lombok.Builder;
 import org.springframework.core.io.Resource;

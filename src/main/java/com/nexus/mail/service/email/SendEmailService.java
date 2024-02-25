@@ -1,6 +1,6 @@
 package com.nexus.mail.service.email;
 
-import com.nexus.mail.models.EmailProperties;
+import com.nexus.mail.properties.EmailProperties;
 import com.nexus.mail.properties.MailProperties;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

@@ -1,6 +1,6 @@
 package mail.models;
 
-import com.nexus.mail.models.EmailProperties;
+import com.nexus.mail.properties.EmailProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 import java.util.Date;
