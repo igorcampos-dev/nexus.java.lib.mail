@@ -1,35 +1,11 @@
-# Project Nexus - Biblioteca de EMail
+# Project Nexus - Biblioteca de Email
 
 uma biblioteca de serviço de envio de Email desenvolvida como parte do projeto Nexus. O objetivo principal desta biblioteca é fornecer funcionalidades uteis para os meus projetos relacionados a enviar email
 
-## Como usar
+## Como Utilizar
 
-Para usar esta biblioteca, você precisa adicionar as seguintes dependências e repositórios ao seu arquivo `pom.xml`:
+Siga os passos abaixo para começar a usar a Biblioteca de Utilidades:
 
-### Dependências
-
-Inclua a seguinte dependência dentro da tag `<dependencies>` do seu `pom.xml`:
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>com.nexus</groupId>
-        <artifactId>mail</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <!-- outras dependências aqui -->
-</dependencies>
-```
-
-Inclua a seguinte dependência dentro da tag `<repositories>` do seu `pom.xml`:
-
-```xml
-<repositories>
-    <repository>
-        <id>lib-mail</id>
-        <url>https://raw.githubusercontent.com/igorcampos-dev/nexus.java.lib.mail/master/target/</url>
-    </repository>
-    <!-- outros repositórios aqui -->
-</repositories>
-
-```
+1. Acesse o site do [JitPack](https://jitpack.io/#igorcampos-dev/nexus.java.lib.mail) através deste link.
+2. Na seção de **Releases**, clique no botão "Get It" abaixo do campo "Status". Isso indica que a biblioteca está compilando corretamente.
+3. No seu projeto, adicione as duas dependências conforme explicado no site do JitPack.
